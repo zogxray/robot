@@ -14,7 +14,7 @@ RF24 radio(10, 9); // CE, CSN
 const byte address[6] = "00001";
 
 enum buttons {LY, RX};
-enum dirs {LYF, LYB, RXL, RXR, STOP};
+enum dirs {LYF, LYB, RXL, RXR, STOP, LIGHT};
 enum slaves {HEART};
 
 typedef struct {
@@ -37,27 +37,6 @@ void setup() {
 void loop() {
   if (radio.available()) {
       radio.read(&package, sizeof(package));
-    
-//    if (package.key == dirs::LYF) {
-//        Serial.print("LYF: ");
-//        Serial.println(package.value);
-//    }
-//
-//    if (package.key == dirs::LYB) {
-//        Serial.print("LYB: ");
-//        Serial.println(package.value);
-//    }
-//
-//    if (package.key == dirs::RXL) {
-//        Serial.print("RXL: ");
-//        Serial.println(package.value);
-//    }
-//
-//    if (package.key == dirs::RXR) {
-//        Serial.print("RX: ");
-//        Serial.println(package.value);
-//    }
-    
       Wire.beginTransmission(slaves::HEART);
       Wire.write((byte *)&package, sizeof package);
       Wire.endTransmission();  
