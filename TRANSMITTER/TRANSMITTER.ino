@@ -22,7 +22,7 @@ unsigned long previousMillisPulse;
 const byte address[6] = "00001";
 
 enum buttons {LY, RX};
-enum dirs {LYF, LYB, RXL, RXR, STOP};
+enum dirs {LYF, LYB, RXL, RXR, STOP, LIGHT};
 
 typedef struct {
   byte key;
@@ -96,6 +96,12 @@ void loop() {
         package.value = map(PS4.getAnalogHat(RightHatX), 138, 255, 0, 255);
       }
       
+      radio.write(&package, sizeof(package));
+  }
+
+  if (PS4.getButtonClick(CIRCLE)) {
+      package.key = dirs::LIGHT;
+      package.value = 0;
       radio.write(&package, sizeof(package));
   }
 }
